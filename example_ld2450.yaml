@@ -83,9 +83,9 @@ number:
   presence_timeout: {name: 'Presence timeout'}  # Presence timeout number
   presence_regions: [{x0: 100, y0: 100, x1: 200, y1: 200, id: presence_region_1}]  # Presence regions
   entry_points: [{x: 0, y: 0}]  # Entry points can be added here
-  region_1: {x0: {name: R0X0}, y0: {name: R0Y0}, x1: {name: R0X1}, y1: {name: R0Y1}}  # Region 1
-  region_2: {x0: {name: R1X0}, y0: {name: R1Y0}, x1: {name: R1X1}, y1: {name: R1Y1}}  # Region 2
-  region_3: {x0: {name: R2X0}, y0: {name: R2Y0}, x1: {name: R2X1}, y1: {name: R2Y1}}  # Region 3
+  region_0: {x0: {name: R0X0}, y0: {name: R0Y0}, x1: {name: R0X1}, y1: {name: R0Y1}}  # Region 1
+  region_1: {x0: {name: R1X0}, y0: {name: R1Y0}, x1: {name: R1X1}, y1: {name: R1Y1}}  # Region 2
+  region_2: {x0: {name: R2X0}, y0: {name: R2Y0}, x1: {name: R2X1}, y1: {name: R2Y1}}  # Region 3
 
 # Select configuration
 select:
