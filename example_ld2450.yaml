@@ -1,185 +1,98 @@
-esphome:
-  name: hlk-presence
-  friendly_name: hlk-presence
+# Basic configuration for ESPHome
+esphome: {name: hlk-presence, friendly_name: hlk-presence}  # Name and friendly name of the device
 
-external_components:
-  - source:
-      type: git
-      url: https://github.com/uncle-yura/esphome-ld2450
-      ref: master
-    components: [ ld2450 ]
+# External components from GitHub
+external_components: 
+  - source: {type: git, url: 'https://github.com/who-said/esphome-ld2450', ref: master}  # Source details
+    components: [ld2450]  # Components to include
 
-esp8266:
-  board: d1_mini
+# Configuration for ESP8266 board
+esp8266: {board: d1_mini}  # Board type
 
-# Enable logging
-logger:
-  baud_rate: 0
+# Logger configuration
+logger: {baud_rate: 0}  # Baud rate for the logger
 
-# Enable Home Assistant API
-api:
-  encryption:
-    key: "your-encryption-key"
+# Home Assistant API
+api: {encryption: {key: 'encryption key'}}  # Encryption key for the API
 
-ota:
-  password: "your-ota-password"
+# Over-the-air update configuration
+ota: {password: 'ota password'}  # Password for OTA updates
 
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
+# WiFi configuration
+wifi: 
+  ssid: !secret wifi_ssid  # SSID of the WiFi network
+  password: !secret wifi_password  # Password of the WiFi network
+  ap: {ssid: 'sensor hotspot', password: 'password'}  # Fallback hotspot details
 
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "your-sensor-hotspot"
-    password: "your-password"
+# Enable captive portal for WiFi configuration
+captive_portal: {}
 
-captive_portal:   
+# UART configuration
+uart: 
+  id: uart_bus  # ID for the UART bus
+  tx_pin: {number: GPIO1}  # TX pin number
+  rx_pin: {number: GPIO3}  # RX pin number
+  baud_rate: 256000  # Baud rate for the UART bus
+  parity: NONE  # Parity for the UART bus
+  stop_bits: 1  # Stop bits for the UART bus
 
-uart:
-  id: uart_bus
-  tx_pin: 
-    number: GPIO1
-  rx_pin: 
-    number: GPIO3
-  baud_rate: 256000
-  parity: NONE
-  stop_bits: 1
+# LD2450 sensor configuration
+ld2450: 
+  uart_id: uart_bus  # ID of the UART bus to use
+  update_interval: 1s  # Update interval for the sensor
+  invert_y: false  # Invert Y-axis
+  invert_x: false  # Invert X-axis
 
-ld2450:
-  uart_id: uart_bus
-  update_interval: 1s
-  invert_y: false
-  invert_x: false
-
+# Binary sensor configuration
 binary_sensor:
 - platform: ld2450
-  has_target:
-    name: Presence
-  has_moving_target:
-    name: Moving Target
-  has_still_target:
-    name: Still Target
-  presence_regions:
-    - name: "Custom Presence Region 0"
-      region_id: presence_region_0
+  has_target: {name: Presence}  # Presence sensor
+  has_moving_target: {name: Moving Target}  # Moving target sensor
+  has_still_target: {name: Still Target}  # Still target sensor
+  presence_regions: [{name: 'Custom Presence Region 0', region_id: presence_region_0}]  # Presence regions, to add more just add extra refion_id and define the coordinates in number configurations in presence_regions
+  
 
+# Text sensor configuration
 text_sensor:
   - platform: ld2450
-    version:
-      name: "FW"
-    mac_address:
-      name: "MAC address"
+    version: {name: 'FW'}  # Firmware version sensor
+    mac_address: {name: 'MAC address'}  # MAC address sensor
 
+# Button configuration
 button:
   - platform: restart
-    name: "ESP Restart"
+    name: 'ESP Restart'  # Restart button for the 8266
   - platform: ld2450
-    factory_reset:
-      name: "Factory reset"
-    reboot:
-      name: "Reboot"
+    factory_reset: {name: 'Factory reset'}  # Factory reset button
+    reboot: {name: 'Reboot'}  # Reboot button
 
+# Switch configuration
 switch:
   - platform: ld2450
-    single_target:
-      name: "Single target"
-    bluetooth:
-      name: "Bluetooth"
+    single_target: {name: 'Single target'}  # Single target switch, this will track a single target only
+    bluetooth: {name: 'Bluetooth'}  # Bluetooth switch
 
+# Number configuration
 number:
 - platform: ld2450
-  rotate:
-    restore_value: true
-    initial_value: 0
-    name: "Rotate angle"
-  presence_timeout:
-    name: "Presence timeout"
-  presence_regions:
-    - x0: 100
-      y0: 100
-      x1: 200
-      y1: 200
-      id: presence_region_0
-  entry_points:
-    - x: 0
-      y: 0
-  region_0:
-    x0:
-      name: R0X0
-    y0:
-      name: R0Y0
-    x1:
-      name: R0X1
-    y1:
-      name: R0Y1
+  rotate: {restore_value: true, initial_value: 0, name: 'Rotate angle'}  # Rotate angle number
+  presence_timeout: {name: 'Presence timeout'}  # Presence timeout number
+  presence_regions: [{x0: 100, y0: 100, x1: 200, y1: 200, id: presence_region_0}]  # Presence regions
+  entry_points: [{x: 0, y: 0}]  # Entry points can be added here
+  region_0: {x0: {name: R0X0}, y0: {name: R0Y0}, x1: {name: R0X1}, y1: {name: R0Y1}}  # Region 0
+  region_1: {x0: {name: R1X0}, y0: {name: R1Y0}, x1: {name: R1X1}, y1: {name: R1Y1}}  # Region 1
+  region_2: {x0: {name: R2X0}, y0: {name: R2Y0}, x1: {name: R2X1}, y1: {name: R2Y1}}  # Region 2
 
-  region_1:
-    x0:
-      name: R1X0
-    y0:
-      name: R1Y0
-    x1:
-      name: R1X1
-    y1:
-      name: R1Y1
-
-  region_2:
-    x0:
-      name: R2X0
-    y0:
-      name: R2Y0
-    x1:
-      name: R2X1
-    y1:
-      name: R2Y1
-
+# Select configuration
 select:
   - platform: ld2450
-    baud_rate:
-      name: "Baud rate"
-    regions_type:
-      name: "Regions type"
+    baud_rate: {name: 'Baud rate'}  # Baud rate
+    regions_type: {name: 'Regions type'}  # Regions type
 
+# Sensor configuration
 sensor:
 - platform: ld2450
-  target_count:
-    name: Target count
-
-  person_0:
-    position_x:
-      name: "P0X"  
-
-    position_y:
-      name: "P0Y"  
-
-    speed:
-      name: "S0"  
-
-    resolution:
-      name: "R0"  
-
-  person_1:
-    position_x:
-      name: "P1X"  
-
-    position_y:
-      name: "P1Y"  
-
-    speed:
-      name: "S1"  
-
-    resolution:
-      name: "R1"  
-
-  person_2:
-    position_x:
-      name: "P2X"  
-
-    position_y:
-      name: "P2Y"  
-
-    speed:
-      name: "S2"  
-
-    resolution:
-      name: "R2"
+  target_count: {name: Target count}  # Target count sensor
+  person_0: {position_x: {name: 'P0X'}, position_y: {name: 'P0Y'}, speed: {name: 'S0'}, resolution: {name: 'R0'}}  # Person 0
+  person_1: {position_x: {name: 'P1X'}, position_y: {name: 'P1Y'}, speed: {name: 'S1'}, resolution: {name: 'R1'}}  # Person 1
+  person_2: {position_x: {name: 'P2X'}, position_y: {name: 'P2Y'}, speed: {name: 'S2'}, resolution: {name: 'R2'}}  # Person 2
