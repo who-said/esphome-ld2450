@@ -1,5 +1,5 @@
 # Basic configuration for ESPHome
-esphome: {name: hlk-presence, friendly_name: hlk-presence}  # Name and friendly name of the device
+esphome: {name: ld2450, friendly_name: ld2450}  # Name and friendly name of the device
 
 # External components from GitHub
 external_components: 
