@@ -1,3 +1,7 @@
+#YAML code to be uploaded onto Home Assistant ESPHome device integration
+
+#Note: Make sure to edit ESPHome Secrets to add ota_password(of your choosing), wifi_ssid, wifi_password and access point ssid and password for fallback hotspot
+
 # Basic configuration for ESPHome
 esphome: {name: ld2450, friendly_name: ld2450}  # Name and friendly name of the device
 
@@ -16,13 +20,13 @@ logger: {baud_rate: 0}  # Baud rate for the logger
 api: {encryption: {key: 'encryption key'}}  # Encryption key for the API
 
 # Over-the-air update configuration
-ota: {password: 'ota password'}  # Password for OTA updates
+ota: {password: !secret ota_password}  # Password for OTA updates
 
 # WiFi configuration
 wifi: 
   ssid: !secret wifi_ssid  # SSID of the WiFi network
   password: !secret wifi_password  # Password of the WiFi network
-  ap: {ssid: 'sensor hotspot', password: 'password'}  # Fallback hotspot details
+  ap: {ssid: !secret ap_id, password: !secret ap_password}  # Fallback hotspot details
 
 # Enable captive portal for WiFi configuration
 captive_portal: {}
@@ -39,7 +43,7 @@ uart:
 # LD2450 sensor configuration
 ld2450: 
   uart_id: uart_bus  # ID of the UART bus to use
-  update_interval: 1s  # Update interval for the sensor
+  update_interval: 0.5s  # Update interval for the sensor
   invert_y: false  # Invert Y-axis
   invert_x: false  # Invert X-axis
 
@@ -49,7 +53,7 @@ binary_sensor:
   has_target: {name: Presence}  # Presence sensor
   has_moving_target: {name: Moving Target}  # Moving target sensor
   has_still_target: {name: Still Target}  # Still target sensor
-  presence_regions: [{name: 'Custom Presence Region 0', region_id: presence_region_0}]  # Presence regions, to add more just add extra refion_id and define the coordinates in number configurations in presence_regions
+  presence_regions: [{name: 'Zone 1', region_id: presence_region_1}]  # Presence regions, to add more just add extra refion_id and define the coordinates in number configurations in presence_regions
   
 
 # Text sensor configuration
@@ -77,11 +81,11 @@ number:
 - platform: ld2450
   rotate: {restore_value: true, initial_value: 0, name: 'Rotate angle'}  # Rotate angle number
   presence_timeout: {name: 'Presence timeout'}  # Presence timeout number
-  presence_regions: [{x0: 100, y0: 100, x1: 200, y1: 200, id: presence_region_0}]  # Presence regions
+  presence_regions: [{x0: 100, y0: 100, x1: 200, y1: 200, id: presence_region_1}]  # Presence regions
   entry_points: [{x: 0, y: 0}]  # Entry points can be added here
-  region_0: {x0: {name: R0X0}, y0: {name: R0Y0}, x1: {name: R0X1}, y1: {name: R0Y1}}  # Region 0
-  region_1: {x0: {name: R1X0}, y0: {name: R1Y0}, x1: {name: R1X1}, y1: {name: R1Y1}}  # Region 1
-  region_2: {x0: {name: R2X0}, y0: {name: R2Y0}, x1: {name: R2X1}, y1: {name: R2Y1}}  # Region 2
+  region_1: {x0: {name: R0X0}, y0: {name: R0Y0}, x1: {name: R0X1}, y1: {name: R0Y1}}  # Region 1
+  region_2: {x0: {name: R1X0}, y0: {name: R1Y0}, x1: {name: R1X1}, y1: {name: R1Y1}}  # Region 2
+  region_3: {x0: {name: R2X0}, y0: {name: R2Y0}, x1: {name: R2X1}, y1: {name: R2Y1}}  # Region 3
 
 # Select configuration
 select:
@@ -93,6 +97,6 @@ select:
 sensor:
 - platform: ld2450
   target_count: {name: Target count}  # Target count sensor
-  person_0: {position_x: {name: 'P0X'}, position_y: {name: 'P0Y'}, speed: {name: 'S0'}, resolution: {name: 'R0'}}  # Person 0
-  person_1: {position_x: {name: 'P1X'}, position_y: {name: 'P1Y'}, speed: {name: 'S1'}, resolution: {name: 'R1'}}  # Person 1
-  person_2: {position_x: {name: 'P2X'}, position_y: {name: 'P2Y'}, speed: {name: 'S2'}, resolution: {name: 'R2'}}  # Person 2
+  person_0: {position_x: {name: 'x1'}, position_y: {name: 'y1'}, speed: {name: 's1'}, resolution: {name: 'R1'}}  # Person 1
+  person_1: {position_x: {name: 'x2'}, position_y: {name: 'y2'}, speed: {name: 's2'}, resolution: {name: 'R2'}}  # Person 2
+  person_2: {position_x: {name: 'x3'}, position_y: {name: 'y3'}, speed: {name: 's3'}, resolution: {name: 'R3'}}  # Person 3
