@@ -1,0 +1,57 @@
+type: custom:plotly-graph  # Type of the custom card
+title: Living Room S1  # Title of the card
+refresh_interval: 0.2  # Refresh interval in seconds
+hours_to_show: current_day  # Show data for the current day
+ha_theme: true  # Use Home Assistant theme
+layout:  # Layout configuration for the plot
+  legend:  # Legend configuration
+    orientation: h  # Horizontal orientation
+  autosize: true  # Automatically adjust size
+  margin:  # Margin configuration
+    autoexpand: true  # Automatically expand to fill available space
+    l: 50  # Left margin
+    r: 20  # Right margin
+    t: 20  # Top margin
+    b: 40  # Bottom margin
+  showlegend: true  # Show legend
+  xaxis:  # X-axis configuration
+    dtick: 50  # Distance between ticks
+    gridcolor: RGBA(200,200,200,0.15)  # Grid color
+    zerolinecolor: RGBA(200,200,200,0.15)  # Zero line color
+    type: number  # Type of data
+    fixedrange: true  # Fixed range
+    range:  # Range of the axis
+      - -200
+      - 200
+  yaxis:  # Y-axis configuration (similar to X-axis)
+    dtick: 50
+    gridcolor: RGBA(200,200,200,0.15)
+    zerolinecolor: RGBA(200,200,200,0.15)
+    scaleanchor: x  # Anchor the scale to the x-axis
+    scaleratio: 1  # Ratio of the scale
+    fixedrange: true
+    range:
+      - -50
+      - 450
+entities:  # Entities to be plotted
+  - entity: ''  # Entity configuration (Room)
+    name: Room  # Name of the entity
+    mode: lines  # Mode of the entity
+    line:  # Line configuration
+      color: RGBA(200,200,200,0.7)  # Color of the line
+      shape: line  # Shape of the line
+      width: 2  # Width of the line
+    x:  # X values
+      - -200
+      - -200
+      - 200
+      - 200
+      - -200
+    'y':  # Y values
+      - 400
+      - 0
+      - 0
+      - 400
+      - 400
+  # Similar configuration for Sensor, Person1, Person2, and Person3
+raw_plotly_config: true  # Use raw Plotly configuration
