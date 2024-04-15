@@ -1,57 +1,115 @@
-type: custom:plotly-graph  # Type of the custom card
-title: Living Room S1  # Title of the card
+type: custom:plotly-graph  # Specifies the type of the card as a custom Plotly graph
+title: Living Room S1  # Title of the graph
 refresh_interval: 0.2  # Refresh interval in seconds
-hours_to_show: current_day  # Show data for the current day
-ha_theme: true  # Use Home Assistant theme
-layout:  # Layout configuration for the plot
-  legend:  # Legend configuration
-    orientation: h  # Horizontal orientation
-  autosize: true  # Automatically adjust size
-  margin:  # Margin configuration
-    autoexpand: true  # Automatically expand to fill available space
+hours_to_show: current_day  # The number of hours of history to show
+ha_theme: true  # Use the Home Assistant theme
+
+layout:  # Defines the layout of the graph
+  legend:
+    orientation: h  # Horizontal orientation for the legend
+  autosize: true  # The graph will resize to fit its container
+  margin:  # Defines the margins around the graph
+    autoexpand: true  # The margins will expand to fit the graph
     l: 50  # Left margin
     r: 20  # Right margin
     t: 20  # Top margin
     b: 40  # Bottom margin
-  showlegend: true  # Show legend
-  xaxis:  # X-axis configuration
+  showlegend: true  # Show the legend
+  xaxis:  # Defines the properties of the x-axis
     dtick: 50  # Distance between ticks
-    gridcolor: RGBA(200,200,200,0.15)  # Grid color
-    zerolinecolor: RGBA(200,200,200,0.15)  # Zero line color
-    type: number  # Type of data
-    fixedrange: true  # Fixed range
-    range:  # Range of the axis
+    gridcolor: RGBA(200,200,200,0.15)  # Color of the grid lines
+    zerolinecolor: RGBA(200,200,200,0.15)  # Color of the zero line
+    type: number  # Type of the x-axis values
+    fixedrange: true  # The range of the x-axis is fixed
+    range:  # Range of the x-axis
       - -200
       - 200
-  yaxis:  # Y-axis configuration (similar to X-axis)
-    dtick: 50
-    gridcolor: RGBA(200,200,200,0.15)
-    zerolinecolor: RGBA(200,200,200,0.15)
-    scaleanchor: x  # Anchor the scale to the x-axis
-    scaleratio: 1  # Ratio of the scale
-    fixedrange: true
-    range:
+  yaxis:  # Defines the properties of the y-axis
+    dtick: 50  # Distance between ticks
+    gridcolor: RGBA(200,200,200,0.15)  # Color of the grid lines
+    zerolinecolor: RGBA(200,200,200,0.15)  # Color of the zero line
+    scaleanchor: x  # The scale of the y-axis is anchored to the x-axis
+    scaleratio: 1  # The ratio of the scale between the y-axis and the x-axis
+    fixedrange: true  # The range of the y-axis is fixed
+    range:  # Range of the y-axis
       - -50
       - 450
-entities:  # Entities to be plotted
-  - entity: ''  # Entity configuration (Room)
+
+entities:  # Defines the entities to be plotted on the graph
+  - entity: ''  # The entity to be plotted
     name: Room  # Name of the entity
-    mode: lines  # Mode of the entity
-    line:  # Line configuration
+    mode: lines  # The entity is represented by lines
+    line:  # Defines the properties of the line
       color: RGBA(200,200,200,0.7)  # Color of the line
       shape: line  # Shape of the line
       width: 2  # Width of the line
-    x:  # X values
+    x:  # x-coordinates of the line
       - -200
       - -200
       - 200
       - 200
       - -200
-    'y':  # Y values
+    'y':  # y-coordinates of the line
       - 400
       - 0
       - 0
       - 400
       - 400
-  # Similar configuration for Sensor, Person1, Person2, and Person3
-raw_plotly_config: true  # Use raw Plotly configuration
+  - entity: ''  # The entity to be plotted
+    name: Sensor  # Name of the entity
+    mode: lines  # The entity is represented by lines
+    fill: toself  # The area under the line is filled
+    fillcolor: RGBA(200,200,0,0.2)  # Color of the fill
+    line:  # Defines the properties of the line
+      color: RGBA(200,200,0,0.2)  # Color of the line
+      shape: line  # Shape of the line
+      width: null  # Width of the line
+    x:  # x-coordinates of the line
+      - -30
+      - 0
+      - 30
+    'y':  # y-coordinates of the line
+      - 30
+      - 0
+      - 30
+  - entity: ''  # The entity to be plotted
+    name: Person1  # Name of the entity
+    show_value: true  # Show the value of the entity
+    unit_of_measurement: cm  # Unit of measurement of the entity
+    marker:  # Defines the properties of the marker
+      size: 12  # Size of the marker
+    line:  # Defines the properties of the line
+      shape: spline  # Shape of the line
+      width: 5  # Width of the line
+    x:  # x-coordinate of the line
+      - $ex hass.states["sensor.ld2450_p0x"].state  # The x-coordinate is obtained from the state of the sensor
+    'y':  # y-coordinate of the line
+      - $ex hass.states["sensor.ld2450_p0y"].state  # The y-coordinate is obtained from the state of the sensor
+  - entity: ''  # The entity to be plotted
+    name: Person2  # Name of the entity
+    show_value: true  # Show the value of the entity
+    unit_of_measurement: cm  # Unit of measurement of the entity
+    marker:  # Defines the properties of the marker
+      size: 12  # Size of the marker
+    line:  # Defines the properties of the line
+      shape: spline  # Shape of the line
+      width: 5  # Width of the line
+    x:  # x-coordinate of the line
+      - $ex hass.states["sensor.ld2450_p1x"].state  # The x-coordinate is obtained from the state of the sensor
+    'y':  # y-coordinate of the line
+      - $ex hass.states["sensor.ld2450_p1y"].state  # The y-coordinate is obtained from the state of the sensor
+  - entity: ''  # The entity to be plotted
+    name: Person3  # Name of the entity
+    show_value: true  # Show the value of the entity
+    unit_of_measurement: cm  # Unit of measurement of the entity
+    marker:  # Defines the properties of the marker
+      size: 12  # Size of the marker
+    line:  # Defines the properties of the line
+      shape: spline  # Shape of the line
+      width: 5  # Width of the line
+    x:  # x-coordinate of the line
+      - $ex hass.states["sensor.ld2450_p2x"].state  # The x-coordinate is obtained from the state of the sensor
+    'y':  # y-coordinate of the line
+      - $ex hass.states["sensor.ld2450_p2y"].state  # The y-coordinate is obtained from the state of the sensor
+
+raw_plotly_config: true  # The configuration is a raw Plotly configuration
