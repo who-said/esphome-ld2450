@@ -16,6 +16,6 @@ Steps
     TX  -- RX
     RX  -- TX
 5. On HA, go to Settings>Devices and Services>Add integrations and add the ESPHome integration (this might not be needed if the device gets discovered already, in that case just adopt the integration). From the ESPHome integration, we can observe the sensor data including targets' coordinates, speed, and other characteristics. We can also customize presence regions according to our convenience, toggle the device Bluetooth, reboot the microcontroller, reset the chip, etc.
-6. Now go to https://hacs.xyz/ and follow the instructions to download the HACS community store, after which we can download the Lovelace Plotly graph card. After that is installed from the HACS community store go to your dashboard and edit it, search for the plotly graph card, go to edit code and paste the ld2450esp_plotly example code1, repeat this with code 2 and press save
+6. Now go to https://hacs.xyz/ and follow the instructions to download the HACS community store, after which we can download the Lovelace Plotly graph card. After that is installed from the HACS community store go to your dashboard and edit it, search for the plotly graph card, go to edit code, and paste the code from PlotlyLD2450F, repeat this with PlotlyLD2450C and press save. You should now be able to see a visualization of the sensor data.
 
   
