@@ -1,0 +1,52 @@
+type: custom:plotly-graph  # Type of the custom card
+title: 1.LD2450  # Title of the card
+refresh_interval: 0.2  # Refresh interval in seconds
+hours_to_show: current_day  # Show data for the current day
+ha_theme: true  # Use Home Assistant theme
+layout:  # Layout configuration for the plot
+  legend:  # Legend configuration
+    'y': 600  # Y position of the legend
+    orientation: h  # Horizontal orientation
+  autosize: true  # Automatically adjust size
+  margin:  # Margin configuration
+    autoexpand: true  # Automatically expand to fill available space
+    l: 50  # Left margin
+    r: 20  # Right margin
+    t: 20  # Top margin
+    b: 40  # Bottom margin
+  showlegend: true  # Show legend
+  xaxis:  # X-axis configuration
+    dtick: 100  # Distance between ticks
+    gridcolor: RGBA(200,200,200,0.15)  # Grid color
+    zerolinecolor: RGBA(200,200,200,0.15)  # Zero line color
+    type: number  # Type of data
+    fixedrange: true  # Fixed range
+    range:  # Range of the axis
+      - 600
+      - -600
+  yaxis:  # Y-axis configuration (similar to X-axis)
+    dtick: 100
+    gridcolor: RGBA(200,200,200,0.15)
+    zerolinecolor: RGBA(200,200,200,0.15)
+    scaleanchor: x  # Anchor the scale to the x-axis
+    scaleratio: 1  # Ratio of the scale
+    fixedrange: true
+    range:
+      - 600
+      - 0
+entities:  # Entities to be plotted
+  - entity: ''  # Entity configuration (Person1)
+    name: Person1  # Name of the entity
+    show_value: true  # Show value
+    unit_of_measurement: cm  # Unit of measurement
+    marker:  # Marker configuration
+      size: 12  # Size of the marker
+    line:  # Line configuration
+      shape: spline  # Shape of the line
+      width: 5  # Width of the line
+    x:  # X values
+      - $ex hass.states["sensor.ld2450_p0x"].state  # State of the sensor
+    'y':  # Y values
+      - $ex hass.states["sensor.ld2450_p0y"].state  # State of the sensor
+  # Similar configuration for Person2, Person3, Zone1, Zone2, Zone3, and Coverage
+raw_plotly_config: true  # Use raw Plotly configuration
